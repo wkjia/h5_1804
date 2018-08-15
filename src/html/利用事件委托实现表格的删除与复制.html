@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>利用事件委托实现表格删除与复制</title>
+    <style>
+    table{border:1px solid #ddd;border-collapse: collapse;width:100%;}
+    td{border:1px solid #ddd;padding:3px 5px;}
+
+    .odd{background-color: #efefef;}
+    </style>
+    <script type="text/javascript">
+    window.onload = function(){
+       //获取页面元素
+        var row = document.getElementById('row')
+        var col = document.getElementById('col')
+        var btn = document.getElementsByClassName('btn')[0]
+        var output = document.getElementById('output')
+        //绑定触发事件元素
+        btn.onclick = function(){
+            //获取输入框的值
+            var _row = row.value;
+            var _col = col.value;
+            //利用创建标签的方法实现创建表格
+            output.innerHTML = '';
+            var table = document.createElement('table')
+            //将table标签写入output中
+            output.appendChild(table)
+            var tbody = document.createElement('tbody')
+            table.appendChild(tbody)
+            //利用for循环实现快速生成表格
+            for(var i = 0;i<_row;i++){
+                //利用table对象创建tr标签
+                //
+                var tr = tbody.insertRow(i)
+                for(var j = 0;j<_col;j++){
+                if (!j){
+                    tr.insertCell(0).innerHTML = i+1;
+                }else{
+                    var td = tr.insertCell(j)
+                    td.innerHTML = '单元格' + i;
+                }
+                    
+                }
+                var lastTd = tr.insertCell(j);
+                lastTd.innerHTML = '<button class="btnDel">删除</button><button class="btnCopy">复制</button>'
+            }
+        } 
+                //点击事件进行表格复制
+                output.onclick = function(e){
+                    e = e || window.event;
+                    var target = e.target || e.srcElement;
+
+                //通过不同的类名进行判断获取
+                if(target.className ==='btnDel'){
+                    var currentTr = target.parentNode.parentNode;
+                    currentTr.parentNode.removeChild(currentTr);
+                }else if(target.className === 'btnCopy'){
+                    var currentTr = target.parentNode.parentNode;
+                    var cloneTr = currentTr.cloneNode(true)
+                    currentTr.parentNode.appendChild(cloneTr)
+                   // console.log('999')
+                }
+            }    
+    }
+        
+    </script>
+</head>
+<body>
+    <h1>11利用事件委托实现表格复制与删除</h1>
+    <label for="row">行：</label><input type="text" id="row">
+    <label for="col">列：</label><input type="text" id="col">
+    <button class="btn">生成表格</button>
+    <div id="output"></div>
+</body>
+</html>

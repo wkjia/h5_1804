@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title> 根据鼠标移动提示框</title>
+    <style type="text/css">
+        *{margin:0;padding:0;}
+        #newlist,h1{margin:50px;}
+        #newlist{margin-bottom: 10px;}
+        #newlist li{padding:10px;margin-left:50px;}
+        #details{width:200px;min-height: 30px;background: #f90;padding:10px;border:2px solid #ccc;position:absolute;text-indent: 32px;border-radius:10px;font-size:18px;display:none;}
+        #biankuang{width:0;height:0;border:15px solid transparent;border-bottom-color:red;margin-left:80px;}
+        #details::after,#details::before{content:"";width:0;height:0;border:20px solid transparent;border-bottom-color:#ccc; position:absolute;left:20px;top:-40px;}
+        #details::after{border:20px solid transparent;position:absolute;left:20px;top:-38px;border-bottom-color:#f90;}
+    </style>
+    <script type="text/javascript">
+        window.onload = function(){
+        //获取页面元素
+        var newlist = document.getElementById('newlist')
+        var details = document.getElementById('details')
+        //获取所有a标签
+        var links = newlist.getElementsByTagName('a')
+        //console.log(links)
+        for(var i = 0;i<links.length;i++){
+        //获取不同的a标签
+            links[i].onmouseover = function(){
+                details.innerText = this.title;
+                 details.style.display = 'block'
+            //备份title属性
+            this.bak = this.title;
+
+            //去除默认效果
+           this.removeAttribute('title')
+            }
+
+            links[i].onmouseout = function(){
+                details.style.display = 'none'
+            //回复title属性
+                this.title =this.bak ;
+            }
+             links[i].onmousemove = function(e){
+                 e = e||window.event;
+                details.style.left =e.clientX- 30 + 'px'
+
+                 details.style.top =e.clientY+ 45 + 'px'
+
+            }
+            
+       }
+
+         }
+    </script>
+</head>
+<body>
+    <h1>新闻提示信息</h1>
+    <ul id="newlist">
+        <li class="new1"><a href="#" title="小明由于调戏女老师再次被滚粗教室">教室文化</a></li>
+        <li class="new2"><a href="#" title="中国第三艘航空母舰今日下水,预计明年年底能正式服役，到2022年能初步形成战斗力">最新军情</a></li>
+        <li class="new3"><a href="#" title="中国第一狗仔卓伟再爆猛料">娱乐头条</a></li>
+    </ul>
+    <div id="details"></div>
+    <div id="biankuang"></div>
+</body>
+</html>

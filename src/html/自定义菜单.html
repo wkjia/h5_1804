@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>自定义菜单</title>
+    <style type="text/css">
+        *{margin:0;padding:0px;}
+        li{list-style:none;padding:0px 20px;}
+        li:hover{background-color:#efefef;border-bottom:1px dashed #ddd;margin-bottom:-1px;}
+        #menu{position:absolute;min-width:200px;min-height:200px;font-size:20px;background: #ccc;text-align: center;line-height:45px;display:none;}
+        li span{padding-left:100px;}
+    </style>
+    <script type="text/javascript">
+        window.onload = function(){
+            //获取页面元素
+            var menu = document.getElementById('menu')
+
+
+            document.oncontextmenu = function(e){
+                    e = e||window.event;
+                    var left =e.clientX + 'px';
+                    var top = e.clientY + 'px';
+                    menu.style.display = 'block'
+                    menu.style.left = left
+                    menu.style.top = top
+                    e.preventDefault()
+            }
+            document.onmouseup = function(){
+                menu.style.display = 'none';
+            }
+            menu.onmouseup = function(e){
+                e.stopPropagation()
+            }
+        }
+    </script>
+</head>
+<body>
+    <ul id="menu">
+        <li>复制 <span>Ctrl+c</span></li>
+        <li>粘贴 <span>Ctrl+v</span></li>
+        <li>剪切 <span>Ctrl+x</span></li>
+        <li>全选 <span>Ctrl+a</span></li>
+    </ul>
+</body>
+</html>

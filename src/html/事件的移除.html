@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>事件的移除</title>
+    <style type="text/css">
+        *{margin:0;padding:0px;}
+        #box{box-sizing:border-box;width:220px;height:200px;background:url(../images/big_4.jpg) no-repeat;background-size:cover;text-align:center;font-size: 30px;line-height: 250px;}
+    </style>
+    <script type="text/javascript">
+    
+    window.onload = function(){
+        //获取页面中的元素  
+        var box = document.getElementById('box') 
+        var btn1 = document.getElementById('btn1')
+        var btn2 = document.getElementById('btn2')
+        //绑定触发事件
+        box.onclick = function(){
+            this.innerHTML = '谢霆锋'
+        }
+        //事件监听与捕获
+        box.addEventListener('mouseover',function(){
+            this.innerHTML = '陈冠希'
+        })
+
+         function amp(){
+            this.innerHTML = '王宝强'
+        }
+        box.addEventListener('mouseout',amp)
+        //进行节点移除
+        btn1.onclick = function(){
+            box.innerHTML = ''
+            box.onclick = null;
+        }
+        //事件移除
+        btn2.onclick = function(){
+            box.removeEventListener('mouseout',amp)
+        }
+    }
+    </script>
+</head>
+<body>
+    <h1>事件的移除</h1>
+    <div id="box"></div>
+    <button id="btn1">节点移除</button> <button id="btn2">事件移除</button>
+</body>
+</html>
